@@ -32,6 +32,7 @@ RDoc::Generator::HTML.class_eval do
   
   def generate_main_index
     main = template_page hanna::INDEX
+    methods = RDoc::Generator::Method.all_methods
     
     open('index.html', 'w')  do |index|
       main.write_html_on index,
@@ -39,7 +40,9 @@ RDoc::Generator::HTML.class_eval do
         'style_url'     => style_url('', @options.css),
         'title'         => @options.title,
         'charset'       => @options.charset,
-        'file_index'    => generate_inline(@files, hanna::FILE_INDEX)
+        'file_index'    => generate_inline(@files, hanna::FILE_INDEX),
+        'class_index'   => generate_inline(@classes, hanna::CLASS_INDEX),
+        'method_index'  => generate_inline(methods, hanna::METHOD_INDEX)
     end
   end
   

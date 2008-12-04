@@ -1,5 +1,5 @@
 - any_hidden = false
-%ol#index-entries{ :class => 'files' }
+%ol.entries{ :class => 'files' }
   - for entry in values["entries"]
     - hide = entry['name'] =~ /\.rb$/
     - any_hidden = true if hide

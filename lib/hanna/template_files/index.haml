@@ -11,6 +11,11 @@
       #sidebar
         %h2 Files
         = values['file_index']
+        %h2 Classes/Modules
+        = values['class_index']
+        %h2 Methods
+        = values['method_index']
+        
       %iframe{ :name => "docwin", :src => values['initial_page'] }
       #footer-push
     #footer
