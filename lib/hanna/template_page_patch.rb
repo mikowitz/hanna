@@ -5,7 +5,8 @@ RDoc::TemplatePage.class_eval do
   include Hanna::TemplateHelpers
   
   # overwrite the original method
-  alias :old_write_html_on :write_html_on # suppresses the overwrite warning
+  alias :original_write_html_on :write_html_on
+  
   def write_html_on(io, values)
     result = @templates.reverse.inject(nil) do |previous, template|
       case template
@@ -15,8 +16,11 @@ RDoc::TemplatePage.class_eval do
         end
       when Sass::Engine
         silence_warnings { template.to_css }
+      when ERB
+        # ERB.new(template)
+        template.result(get_binding(values){ previous })
       when String
-        ERB.new(template).result(get_binding(values){ previous })
+        template
       when nil
         previous
       else
@@ -29,9 +33,14 @@ RDoc::TemplatePage.class_eval do
     $stderr.puts "error while writing to #{io.inspect}"
     raise
   end
+  
+  def output(io)
+    write_html_on(io, {})
+  end
 
   private
-
+    
+    # hack for use with ERB#result
     def get_binding(values = nil)
       binding
     end

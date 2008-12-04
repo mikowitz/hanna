@@ -6,7 +6,7 @@
 
 require 'haml'
 require 'sass'
-require 'rdoc/generator/html'
+require 'hanna/html_generator_patch'
 require 'hanna/template_page_patch'
 
 module RDoc::Generator::HTML::HANNA
