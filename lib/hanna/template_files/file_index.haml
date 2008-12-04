@@ -1,6 +1,4 @@
-%h1= values["list_title"]
 - any_hidden = false
-
 %ol#index-entries{ :class => 'files' }
   - for entry in values["entries"]
     - hide = entry['name'] =~ /\.rb$/
